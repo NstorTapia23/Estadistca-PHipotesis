@@ -2,9 +2,10 @@ import { useState } from "react";
 import { NavBarMedia } from "./NavBarMedia";
 
 export function Media1n() {
-  const [tamMuestra, setTamMuestra] = useState(0);
+  const [tamMuestra, setTamMuestra] = useState("");
   const [significacion, setSignificacion] = useState("");
   const [tipoPrueba, setTipoPrueba] = useState(1);
+  const [varianza, setVarianza] = useState("");
 
   return (
     <div>
@@ -19,27 +20,40 @@ export function Media1n() {
           <div className="flex flex-col">
             <label className="mb-2 font-medium">Tamaño de la muestra</label>
             <input
-              type="number"
-              min={0}
+              type="text"
+              inputMode="numeric"
+              placeholder="Ingrese tamaño"
               value={tamMuestra}
-              onChange={(e) => setTamMuestra(Number(e.target.value))}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-base md:text-lg
-                         focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => {
+                const value = e.target.value;
+
+                if (/^\d*$/.test(value)) {
+                  setTamMuestra(value);
+                }
+              }}
+              className="w-full rounded-md border border-gray-300 px-3 py-2
+             text-base md:text-lg focus:border-blue-500
+             focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <div className="flex flex-col">
             <label className="mb-2 font-medium">Significación</label>
             <input
-              type="number"
+              type="text"
               inputMode="decimal"
-              step={"0.01"}
-              min={0}
-              max={1}
+              placeholder="0.05"
               value={significacion}
-              onChange={(e) => setSignificacion(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-base md:text-lg
-                         focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => {
+                const value = e.target.value;
+
+                if (/^(\d+(\.\d*)?)?$/.test(value)) {
+                  setSignificacion(value);
+                }
+              }}
+              className="w-full rounded-md border border-gray-300 px-3 py-2
+             text-base md:text-lg focus:border-blue-500
+             focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -60,9 +74,17 @@ export function Media1n() {
           <div className="flex flex-col">
             <label className="mb-2 font-medium">Varianza Poblacional</label>
             <input
-              type="number"
+              type="text"
               min={0}
               placeholder="Varianza"
+              value={varianza}
+              onChange={(e) => {
+                const value = e.target.value;
+
+                if (/^\d*$/.test(value)) {
+                  setVarianza(value);
+                }
+              }}
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-base md:text-lg
                          focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
