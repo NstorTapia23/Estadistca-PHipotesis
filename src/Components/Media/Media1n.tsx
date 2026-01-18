@@ -3,7 +3,7 @@ import { NavBarMedia } from "./NavBarMedia";
 
 export function Media1n() {
   const [tamMuestra, setTamMuestra] = useState(0);
-  const [significacion, setSignificacion] = useState(0);
+  const [significacion, setSignificacion] = useState("");
   const [tipoPrueba, setTipoPrueba] = useState(1);
 
   return (
@@ -32,10 +32,12 @@ export function Media1n() {
             <label className="mb-2 font-medium">Significación</label>
             <input
               type="number"
-              step="0.01"
+              inputMode="decimal"
+              step={"0.01"}
               min={0}
+              max={1}
               value={significacion}
-              onChange={(e) => setSignificacion(Number(e.target.value))}
+              onChange={(e) => setSignificacion(e.target.value)}
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-base md:text-lg
                          focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
