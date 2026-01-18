@@ -1,4 +1,4 @@
-import { NavBarMedia } from "./NavBarMedia";
+import { NavBarMedia } from "../NavBarMedia";
 import { useState } from "react";
 
 export function Media2n() {

@@ -45,8 +45,8 @@ export default function SideBar() {
             Varianza
           </Link>
 
-          <Link to="/OtraCosa" className="px-4 py-2 rounded hover:bg-gray-700">
-            Otra Cosa
+          <Link to="/Parametro" className="px-4 py-2 rounded hover:bg-gray-700">
+            Parametro
           </Link>
         </nav>
       </div>
