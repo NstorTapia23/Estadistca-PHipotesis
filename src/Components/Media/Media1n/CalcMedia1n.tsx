@@ -28,7 +28,6 @@ export function CalcMedia1n({
   mostrar,
 }: Props) {
   const [mostrarComparacion, setMostrarComparacion] = useState(false);
-
   const { register, handleSubmit, watch } = useForm<FormValues>();
 
   if (!mostrar) return null;
@@ -39,85 +38,95 @@ export function CalcMedia1n({
 
   const valorTabla = watch("valorTabla");
 
-  const onSubmit = () => {
-    setMostrarComparacion(true);
-  };
+  const onSubmit = () => setMostrarComparacion(true);
 
   return (
-    <div>
-      <p>
-        Busque en la tabla de distribución normal el valor{" "}
-        <strong>{resultadoTabla}</strong>
-      </p>
+    <div className="mt-6 max-w-xl mx-auto bg-white rounded-xl shadow-md p-6 space-y-5">
+      {/* Título */}
+      <div>
+        <h2 className="text-lg font-semibold text-gray-800">Valor crítico</h2>
+        <p className="text-sm text-gray-600 mt-1">
+          Busque en la tabla el valor{" "}
+          <span className="font-semibold text-blue-600">{resultadoTabla}</span>
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          placeholder="Valor encontrado"
-          type="number"
-          step="any"
-          {...register("valorTabla", {
-            required: true,
-            valueAsNumber: true,
-          })}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-base md:text-lg
-                     focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+      {/* Formulario */}
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Valor encontrado en la tabla
+          </label>
+          <input
+            type="number"
+            step="any"
+            placeholder="Ej: 1.96"
+            {...register("valorTabla", {
+              required: true,
+              valueAsNumber: true,
+            })}
+            className="rounded-md border border-gray-300 px-3 py-2
+                       focus:outline-none focus:ring-2 focus:ring-blue-500
+                       focus:border-blue-500 text-gray-800"
+          />
+        </div>
 
         <button
           type="submit"
           disabled={mostrarComparacion}
-          className="mt-4 col-span-1 sm:col-span-2 lg:col-span-4 px-4 py-2
-                     bg-blue-600 text-white rounded text-base md:text-lg"
+          className={`py-2 rounded-md font-medium transition
+            ${
+              mostrarComparacion
+                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-700"
+            }`}
         >
-          {mostrarComparacion ? "Ocultar" : "Comparar"}
+          {mostrarComparacion ? "Resultado mostrado" : "Comparar"}
         </button>
       </form>
 
+      {/* Resultado */}
       {mostrarComparacion && valorTabla !== undefined && (
-        <Comparacion1n
-          valorTabla={valorTabla}
-          tipoPrueba={tipoPrueba}
-          tamMuestra={tamMuestra}
-          DesviacionTipica={DesviacionTipica}
-          varianzaConocida={varianzaConocida}
-          mediaMuestral={mediaMuestral}
-          mediaPoblacional={mediaPoblacional}
-        />
+        <div className="pt-4 border-t border-gray-200">
+          <Comparacion1n
+            valorTabla={valorTabla}
+            tipoPrueba={tipoPrueba}
+            tamMuestra={tamMuestra}
+            DesviacionTipica={DesviacionTipica}
+            varianzaConocida={varianzaConocida}
+            mediaMuestral={mediaMuestral}
+            mediaPoblacional={mediaPoblacional}
+          />
+        </div>
       )}
     </div>
   );
 }
 
+/* =======================
+   Funciones auxiliares
+   ======================= */
+
 function valorTablaVarConocida(significacion: number, tipoPrueba: number) {
   switch (tipoPrueba) {
-    case 1: {
-      return `${1 - significacion / 2}`;
-    }
-    case 2: {
-      return `${1 - significacion}`;
-    }
-    case 3: {
-      return `${1 - significacion}`;
-    }
-    default:
-      return;
-      break;
+    case 1:
+      return 1 - significacion / 2;
+    case 2:
+    case 3:
+      return 1 - significacion;
   }
 }
+
 function valorTablaVarDesconocida(
   significacion: number,
   tipoPrueba: number,
   tamMuestra: number,
 ) {
   switch (tipoPrueba) {
-    case 1: {
+    case 1:
       return `${1 - significacion / 2} ; ${tamMuestra - 1}`;
-    }
-    case 2 | 3: {
+    case 2:
+    case 3:
       return `${1 - significacion} ; ${tamMuestra - 1}`;
-    }
-    default:
-      return null;
-      break;
   }
 }

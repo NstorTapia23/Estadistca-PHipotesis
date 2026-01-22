@@ -7,7 +7,6 @@ type DatosCalculo = {
   tamMuestra: number;
   significacion: number;
   tipoPrueba: number;
-  varianza: number;
   DesviacionTipica: number;
   varianzaConocida: boolean;
   mediaMuestral: number;
@@ -40,7 +39,7 @@ export function Media1n() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-6">
         <h1 className="text-xl md:text-2xl font-bold">
-          Resolución de la media con una muestra:
+          Resolución de la media con una muestra
         </h1>
 
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -49,18 +48,18 @@ export function Media1n() {
             <label className="mb-2 font-medium">Tamaño de la muestra</label>
             <input
               type="number"
+              min={1}
               {...register("tamMuestra", {
                 required: true,
-                min: 1,
                 valueAsNumber: true,
               })}
               className={inputStyle}
             />
           </div>
 
-          {/* Media Muestral */}
+          {/* Media muestral */}
           <div className="flex flex-col">
-            <label className="mb-2 font-medium">Media Muestral</label>
+            <label className="mb-2 font-medium">Media muestral</label>
             <input
               type="number"
               step="any"
@@ -72,9 +71,9 @@ export function Media1n() {
             />
           </div>
 
-          {/* Media Poblacional */}
+          {/* Media poblacional */}
           <div className="flex flex-col">
-            <label className="mb-2 font-medium">Media Poblacional</label>
+            <label className="mb-2 font-medium">Media poblacional</label>
             <input
               type="number"
               step="any"
@@ -88,14 +87,14 @@ export function Media1n() {
 
           {/* Significación */}
           <div className="flex flex-col">
-            <label className="mb-2 font-medium">Significación</label>
+            <label className="mb-2 font-medium">Significación (α)</label>
             <input
               type="number"
               step="any"
+              min={0}
+              max={1}
               {...register("significacion", {
                 required: true,
-                min: 0,
-                max: 1,
                 valueAsNumber: true,
               })}
               className={inputStyle}
@@ -115,7 +114,7 @@ export function Media1n() {
             </select>
           </div>
 
-          {/* Varianza */}
+          {/* Varianza conocida / desconocida */}
           <div className="flex flex-col">
             <label className="mb-2 font-medium">Varianza</label>
             <select
@@ -130,15 +129,15 @@ export function Media1n() {
 
             <label className="mb-2 font-medium mt-2">
               {varianzaConocida
-                ? "Desviación Típica Poblacional"
-                : "Desviación Típica Muestral"}
+                ? "Desviación típica poblacional"
+                : "Desviación típica muestral"}
             </label>
 
             <input
               type="number"
               step="any"
               min={0}
-              {...register("varianza", {
+              {...register("DesviacionTipica", {
                 required: true,
                 valueAsNumber: true,
               })}

@@ -1,4 +1,4 @@
-type Comparacion2n = {
+type Comparacion2nProps = {
   varUser: number;
   tamMuestra1: number;
   tamMuestra2: number;
@@ -7,6 +7,7 @@ type Comparacion2n = {
   media1: number;
   media2: number;
 };
+
 export function Comparacion2n({
   varUser,
   tamMuestra1,
@@ -15,8 +16,8 @@ export function Comparacion2n({
   varianza2,
   media1,
   media2,
-}: Comparacion2n) {
-  const varEstadigrafo = estadigrafo(
+}: Comparacion2nProps) {
+  const estadistico = calcularEstadistico(
     media1,
     media2,
     varianza1,
@@ -24,27 +25,43 @@ export function Comparacion2n({
     tamMuestra1,
     tamMuestra2,
   );
-  return Comparacion(varEstadigrafo, varUser);
+  const resultado = comparar(estadistico, varUser);
+
+  const color = resultado.includes("rechaza")
+    ? "text-red-600"
+    : "text-green-600";
+
+  return (
+    <div className="mt-4 p-4 bg-gray-50 rounded-md shadow-sm">
+      <p className="text-sm text-gray-500 mb-2">
+        Estadístico calculado:{" "}
+        <span className="font-semibold">{estadistico.toFixed(3)}</span>
+      </p>
+      <p className={`font-medium text-lg ${color}`}>{resultado}</p>
+    </div>
+  );
 }
 
-function estadigrafo(
-  Media1: number,
-  Media2: number,
+/* =======================
+   Funciones auxiliares
+   ======================= */
+
+function calcularEstadistico(
+  media1: number,
+  media2: number,
   varianza1: number,
   varianza2: number,
   tamMuestra1: number,
   tamMuestra2: number,
 ) {
-  const estadigrafo =
-    (Media1 - Media2) /
-    Math.sqrt(varianza1 / tamMuestra1 + varianza2 / tamMuestra2);
-  return estadigrafo;
+  return (
+    (media1 - media2) /
+    Math.sqrt(varianza1 / tamMuestra1 + varianza2 / tamMuestra2)
+  );
 }
 
-function Comparacion(varEstadigrafo: number, varUser: number) {
-  if (Math.abs(varEstadigrafo) > varUser) {
-    return <p> Se rechaza la hipotesis nula</p>;
-  } else {
-    return <p> No se rechaza la hipotesis nula</p>;
-  }
+function comparar(estadistico: number, varUser: number) {
+  return Math.abs(estadistico) > varUser
+    ? "Se rechaza la hipótesis nula"
+    : "No se rechaza la hipótesis nula";
 }

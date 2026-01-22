@@ -159,14 +159,16 @@ export function Media2n() {
           </div>
 
           {/* Botón */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-3 flex justify-center mt-4">
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Calcular
-            </button>
-          </div>
+          {!mostrar && (
+            <div className="col-span-1 sm:col-span-2 lg:col-span-3 flex justify-center mt-4">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Calcular
+              </button>
+            </div>
+          )}
         </form>
 
         {mostrar && datosCalculo && (
