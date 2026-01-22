@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Comparacion1n } from "./Comparacion1n";
+
 type Props = {
   tamMuestra: number;
   significacion: number;
@@ -10,6 +12,11 @@ type Props = {
   mediaPoblacional: number;
   mostrar: boolean;
 };
+
+type FormValues = {
+  valorTabla: number;
+};
+
 export function CalcMedia1n({
   tamMuestra,
   significacion,
@@ -20,44 +27,61 @@ export function CalcMedia1n({
   mediaPoblacional,
   mostrar,
 }: Props) {
-  const [valorTabla, setValorTabla] = useState("");
   const [mostrarComparacion, setMostrarComparacion] = useState(false);
-  if (!mostrar) {
-    return null;
-  }
+
+  const { register, handleSubmit, watch } = useForm<FormValues>();
+
+  if (!mostrar) return null;
+
   const resultadoTabla = varianzaConocida
     ? valorTablaVarConocida(significacion, tipoPrueba)
     : valorTablaVarDesconocida(significacion, tipoPrueba, tamMuestra);
-  console.log(resultadoTabla);
+
+  const valorTabla = watch("valorTabla");
+
+  const onSubmit = () => {
+    setMostrarComparacion(true);
+  };
 
   return (
     <div>
-      <p>Busque en la tabla de distribución normal el valor {resultadoTabla}</p>
-      <input
-        type="text"
-        placeholder="Valor encontrado"
-        value={valorTabla}
-        onChange={(e) => setValorTabla(e.target.value)}
-        className="w-full rounded-md border border-gray-300 px-3 py-2 text-base md:text-lg
-                              focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <button
-        onClick={() => setMostrarComparacion(true)}
-        disabled={mostrarComparacion}
-        className="col-span-1 sm:col-span-2 lg:col-span-4 px-4 py-2 bg-blue-600 text-white rounded text-base md:text-lg"
-      >
-        {mostrarComparacion ? "Ocultar" : "Comparar"}
-      </button>
-      {mostrarComparacion && (
+      <p>
+        Busque en la tabla de distribución normal el valor{" "}
+        <strong>{resultadoTabla}</strong>
+      </p>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input
+          placeholder="Valor encontrado"
+          type="number"
+          step="any"
+          {...register("valorTabla", {
+            required: true,
+            valueAsNumber: true,
+          })}
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-base md:text-lg
+                     focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <button
+          type="submit"
+          disabled={mostrarComparacion}
+          className="mt-4 col-span-1 sm:col-span-2 lg:col-span-4 px-4 py-2
+                     bg-blue-600 text-white rounded text-base md:text-lg"
+        >
+          {mostrarComparacion ? "Ocultar" : "Comparar"}
+        </button>
+      </form>
+
+      {mostrarComparacion && valorTabla !== undefined && (
         <Comparacion1n
-          key={1}
-          valorTabla={Number(valorTabla)}
+          valorTabla={valorTabla}
           tipoPrueba={tipoPrueba}
           tamMuestra={tamMuestra}
           DesviacionTipica={DesviacionTipica}
           varianzaConocida={varianzaConocida}
-          mediaMuestral={Number(mediaMuestral)}
-          mediaPoblacional={Number(mediaPoblacional)}
+          mediaMuestral={mediaMuestral}
+          mediaPoblacional={mediaPoblacional}
         />
       )}
     </div>
