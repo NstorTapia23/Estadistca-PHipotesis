@@ -19,6 +19,7 @@ export function CalcVarianza({
   const [results, setResults] = useState<useValues2 | null>(null);
   const onSubmit = (data: useValues2) => {
     setResults(data);
+    console.log(significacion);
     setMostrarComparacion(true);
   };
   return (
@@ -63,6 +64,7 @@ export function CalcVarianza({
           tamMuestra={tamMuestra}
           varianzaMuestral={varianzaMuestral}
           varianzaPoblacional={varianzaPoblacional}
+          significacion={significacion}
         />
       )}
     </div>

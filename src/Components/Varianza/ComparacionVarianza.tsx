@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 type formValues = {
   valorTabla: number;
   caso: number;
@@ -14,9 +15,11 @@ export function ComparacionVarianza({
   varianzaPoblacional,
   significacion,
 }: formValues) {
+  useEffect(() => {
+    console.log(significacion);
+  }, [significacion]);
   return (
     <div>
-      <h2>Comparación Varianza</h2>
       <p>
         {RegionCritica({
           caso,
