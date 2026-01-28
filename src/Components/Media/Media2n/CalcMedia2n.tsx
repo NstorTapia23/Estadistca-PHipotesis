@@ -95,6 +95,7 @@ export function CalcMedia2n({
             varianza1={varianza1}
             varianza2={varianza2}
             media1={media1}
+            significacion={significacion}
             media2={media2}
           />
         </div>

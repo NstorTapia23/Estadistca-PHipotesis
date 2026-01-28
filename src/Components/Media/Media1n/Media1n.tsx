@@ -130,7 +130,7 @@ export function Media1n() {
             </select>
 
             <label className="mb-2 font-medium mt-2">
-              {!varianzaConocida
+              {varianzaConocida === true
                 ? "Desviación típica poblacional"
                 : "Desviación típica muestral"}
             </label>

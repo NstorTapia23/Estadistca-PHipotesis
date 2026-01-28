@@ -68,6 +68,7 @@ export function CalcProporcion({
             tipoPrueba={tipoPrueba}
             estadigrafo={Estadigrafo(tamMuestra, numExitos, P0)}
             valorTabla={valorTabla}
+            significacion={significacion}
           />
         </div>
       )}

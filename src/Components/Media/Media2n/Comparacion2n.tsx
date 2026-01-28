@@ -6,12 +6,14 @@ type Comparacion2nProps = {
   varianza2: number;
   media1: number;
   media2: number;
+  significacion: number;
 };
 
 export function Comparacion2n({
   varUser,
   tamMuestra1,
   tamMuestra2,
+  significacion,
   varianza1,
   varianza2,
   media1,
@@ -25,7 +27,7 @@ export function Comparacion2n({
     tamMuestra1,
     tamMuestra2,
   );
-  const resultado = comparar(estadistico, varUser);
+  const resultado = comparar(estadistico, varUser, significacion);
 
   const color = resultado.includes("rechaza")
     ? "text-red-600"
@@ -56,8 +58,8 @@ function calcularEstadistico(
   );
 }
 
-function comparar(estadistico: number, varUser: number) {
+function comparar(estadistico: number, varUser: number, significacion: number) {
   return Math.abs(estadistico) > varUser
-    ? "Se rechaza la hipótesis nula"
-    : "No se rechaza la hipótesis nula";
+    ? `Con un nivel de significación de ${significacion} Se rechaza la hipótesis nula `
+    : `Con un nivel de significación de ${significacion} No se rechaza la hipótesis nula`;
 }

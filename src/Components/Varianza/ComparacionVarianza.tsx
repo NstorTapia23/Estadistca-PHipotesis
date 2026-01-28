@@ -4,6 +4,7 @@ type formValues = {
   tamMuestra: number;
   varianzaMuestral: number;
   varianzaPoblacional: number;
+  significacion: number;
 };
 export function ComparacionVarianza({
   valorTabla,
@@ -11,6 +12,7 @@ export function ComparacionVarianza({
   tamMuestra,
   varianzaMuestral,
   varianzaPoblacional,
+  significacion,
 }: formValues) {
   return (
     <div>
@@ -22,6 +24,7 @@ export function ComparacionVarianza({
           varianzaMuestral,
           varianzaPoblacional,
           valorTabla,
+          significacion,
         })}
       </p>
     </div>
@@ -33,6 +36,7 @@ function RegionCritica({
   varianzaMuestral,
   varianzaPoblacional,
   valorTabla,
+  significacion,
 }: formValues) {
   switch (caso) {
     case 1:
@@ -40,18 +44,18 @@ function RegionCritica({
         Estadigrafo(tamMuestra, varianzaMuestral, varianzaPoblacional) <
         valorTabla
       ) {
-        return `Se Rechaza la hipotesis nula`;
+        return `Con un nivel de significación de ${significacion} Se Rechaza la hipotesis nula`;
       } else {
-        return `Se Acepta la hipotesis nula`;
+        return `Con un nivel de significación de ${significacion} Se Acepta la hipotesis nula`;
       }
     case 2:
       if (
         Estadigrafo(tamMuestra, varianzaMuestral, varianzaPoblacional) >
         valorTabla
       ) {
-        return `Se Rechaza la hipotesis nula`;
+        return `Con un nivel de significación de ${significacion} Se Rechaza la hipotesis nula`;
       } else {
-        return `Se Acepta la hipotesis nula`;
+        return `Con un nivel de significación de ${significacion} Se Acepta la hipotesis nula`;
       }
     case 3:
       if (
