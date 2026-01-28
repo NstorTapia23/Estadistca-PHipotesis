@@ -1,22 +1,20 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { CalcVarianza } from "./CalcVarianza";
-
+import { CalcProporcion } from "./CalcProporcion";
 export type useValues = {
-  caso: number;
+  tipoPrueba: number;
   significacion: number;
-  varianzaMuestral: number;
-  varianzaPoblacional: number;
   tamMuestra: number;
+  numExitos: number;
+  P0: number;
 };
-export function Varianza() {
+export function Proporcion() {
   const { register, handleSubmit } = useForm<useValues>();
   const [result, setResult] = useState<useValues | null>(null);
   const [mostrar, setMostrar] = useState(false);
   const onSubmit = (data: useValues) => {
     setResult(data);
     setMostrar(true);
-    console.log(data);
   };
   return (
     <div className="p-4 md:p-6">
@@ -27,15 +25,12 @@ export function Varianza() {
       >
         {/* Tipo de Prueba */}
         <div className="flex flex-col">
-          <label className="mb-2 font-medium" htmlFor="caso">
+          <label className="mb-2 font-medium" htmlFor="tipoPrueba">
             Tipo de Prueba
           </label>
           <select
             className="w-full rounded-md border px-3 py-2"
-            {...register("caso", {
-              required: true,
-              valueAsNumber: true,
-            })}
+            {...register("tipoPrueba", { required: true, valueAsNumber: true })}
           >
             <option value={1}>Bilateral</option>
             <option value={2}>Unilateral Derecho</option>
@@ -51,8 +46,6 @@ export function Varianza() {
             className="w-full rounded-md border px-3 py-2"
             type="number"
             step={"0.01"}
-            min={0}
-            max={1}
             inputMode="decimal"
             {...register("significacion", {
               required: true,
@@ -60,33 +53,34 @@ export function Varianza() {
             })}
           />
         </div>
-        {/* Varianza Muestral */}
+
+        {/* Numero de Exitos */}
         <div className="flex flex-col">
-          <label className="mb-2 font-medium" htmlFor="varianzaMuestral">
-            Varianza Muestral
+          <label className="mb-2 font-medium" htmlFor="numExitos">
+            Numero de exitos
           </label>
           <input
-            step={"any"}
             className="w-full rounded-md border px-3 py-2"
             type="number"
-            id="varianzaMuestral"
-            {...register("varianzaMuestral", {
+            step={"any"}
+            id="numExitos"
+            {...register("numExitos", {
               required: true,
               valueAsNumber: true,
             })}
           />
         </div>
-        {/* Media Poblacional */}
+        {/* Proporcion Poblacional Hipotetica */}
         <div className="flex flex-col">
-          <label className="mb-2 font-medium" htmlFor="varianzaPoblacional">
-            Varianza Poblacional
+          <label className="mb-2 font-medium" htmlFor="P0">
+            Proporcion Hipotetica
           </label>
           <input
-            step={"any"}
             className="w-full rounded-md border px-3 py-2"
             type="number"
-            id="varianzaPoblacional"
-            {...register("varianzaPoblacional", {
+            id="P0"
+            step="any"
+            {...register("P0", {
               required: true,
               valueAsNumber: true,
             })}
@@ -102,7 +96,6 @@ export function Varianza() {
             pattern="[0-9]*"
             className="w-full rounded-md border px-3 py-2"
             type="number"
-            min={1}
             id="tamMuestra"
             {...register("tamMuestra", {
               required: true,
@@ -122,17 +115,14 @@ export function Varianza() {
         )}
       </form>
       {mostrar && result && (
-        <CalcVarianza
-          caso={result.caso}
+        <CalcProporcion
+          tipoPrueba={result.tipoPrueba}
           significacion={result.significacion}
-          varianzaMuestral={result.varianzaMuestral}
-          varianzaPoblacional={result.varianzaPoblacional}
           tamMuestra={result.tamMuestra}
+          numExitos={result.numExitos}
+          P0={result.P0}
         />
       )}
     </div>
   );
-}
-{
-  /* Cambiar peticiones , varianza muestral , varianza poblacional , borrar pedir medias,  */
 }

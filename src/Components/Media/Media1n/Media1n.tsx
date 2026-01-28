@@ -28,6 +28,7 @@ export function Media1n() {
 
   const onSubmit = (data: DatosCalculo) => {
     setDatosCalculo(data);
+    console.log(data);
     setMostrar(true);
   };
 
@@ -38,9 +39,9 @@ export function Media1n() {
       <NavBarMedia />
 
       <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-6">
-        <h1 className="text-xl md:text-2xl font-bold">
+        <h2 className="text-xl md:text-2xl font-bold">
           Resolución de la media con una muestra
-        </h1>
+        </h2>
 
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Tamaño de la muestra */}
@@ -90,7 +91,7 @@ export function Media1n() {
             <label className="mb-2 font-medium">Significación (α)</label>
             <input
               type="number"
-              step="any"
+              step="0.01"
               min={0}
               max={1}
               {...register("significacion", {
@@ -109,8 +110,8 @@ export function Media1n() {
               className={inputStyle}
             >
               <option value={1}>Bilateral</option>
-              <option value={2}>Unilateral Izquierda</option>
-              <option value={3}>Unilateral Derecha</option>
+              <option value={2}>Unilateral Derecha</option>
+              <option value={3}>Unilateral Izquierda</option>
             </select>
           </div>
 
@@ -121,6 +122,7 @@ export function Media1n() {
               {...register("varianzaConocida", {
                 setValueAs: (v) => v === "true",
               })}
+              defaultValue={"true"}
               className={inputStyle}
             >
               <option value="true">Conocida</option>
@@ -128,7 +130,7 @@ export function Media1n() {
             </select>
 
             <label className="mb-2 font-medium mt-2">
-              {varianzaConocida
+              {!varianzaConocida
                 ? "Desviación típica poblacional"
                 : "Desviación típica muestral"}
             </label>
@@ -136,7 +138,6 @@ export function Media1n() {
             <input
               type="number"
               step="any"
-              min={0}
               {...register("DesviacionTipica", {
                 required: true,
                 valueAsNumber: true,

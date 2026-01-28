@@ -3,6 +3,7 @@ type Props = {
   tipoPrueba: number;
   tamMuestra: number;
   DesviacionTipica: number;
+  significacion: number;
   varianzaConocida: boolean;
   mediaMuestral: number;
   mediaPoblacional: number;
@@ -10,9 +11,13 @@ type Props = {
 
 export function Comparacion1n(props: Props) {
   const estadistico = calcularEstadistico(props);
-  const resultado = comparar(estadistico, props.valorTabla, props.tipoPrueba);
+  const resultado = comparar(
+    estadistico,
+    props.valorTabla,
+    props.tipoPrueba,
+    props.significacion,
+  );
 
-  // color según resultado
   const color = resultado.includes("rechaza")
     ? "text-red-600"
     : "text-green-600";
@@ -20,7 +25,7 @@ export function Comparacion1n(props: Props) {
   return (
     <div className="mt-4 p-4 bg-gray-50 rounded-md shadow-sm">
       <p className="text-sm text-gray-500 mb-2">
-        Estadístico calculado:{" "}
+        Estadígrafo calculado:{" "}
         <span className="font-semibold">{estadistico.toFixed(3)}</span>
       </p>
       <p className={`font-medium text-lg ${color}`}>{resultado}</p>
@@ -40,21 +45,26 @@ function calcularEstadistico({
   );
 }
 
-function comparar(estadistico: number, valorTabla: number, tipoPrueba: number) {
+function comparar(
+  estadistico: number,
+  valorTabla: number,
+  tipoPrueba: number,
+  significacion: number,
+) {
   switch (tipoPrueba) {
     case 1:
       return Math.abs(estadistico) > valorTabla
-        ? "Se rechaza la hipótesis nula"
-        : "No se rechaza la hipótesis nula";
+        ? `Con un nivel de significación de ${significacion} se rechaza la hipótesis nula `
+        : `Con un nivel de significación de ${significacion} no se rechaza la hipótesis nula`;
     case 2:
       return estadistico > valorTabla
-        ? "Se rechaza la hipótesis nula"
-        : "No se rechaza la hipótesis nula";
+        ? `Con un nivel de significación de ${significacion} se rechaza la hipótesis nula`
+        : `Con un nivel de significación de ${significacion} no se rechaza la hipótesis nula`;
     case 3:
       return estadistico < valorTabla
-        ? "Se rechaza la hipótesis nula"
-        : "No se rechaza la hipótesis nula";
+        ? `Con un nivel de significación de ${significacion} se rechaza la hipótesis nula`
+        : `Con un nivel de significación de ${significacion} no se rechaza la hipótesis nula`;
     default:
-      return "No se rechaza la hipótesis nula";
+      return "error";
   }
 }

@@ -130,7 +130,7 @@ export function Media2n() {
             </select>
 
             <div className="flex flex-col mt-2">
-              <label className="mb-2 font-medium">Desviación típica 1</label>
+              <label className="mb-2 font-medium">Varianza 1</label>
               <input
                 type="number"
                 step="any"
@@ -144,7 +144,7 @@ export function Media2n() {
             </div>
 
             <div className="flex flex-col mt-2">
-              <label className="mb-2 font-medium">Desviación típica 2</label>
+              <label className="mb-2 font-medium">Varianza 2</label>
               <input
                 type="number"
                 step="any"

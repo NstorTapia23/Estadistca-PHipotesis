@@ -34,17 +34,13 @@ export function Comparacion2n({
   return (
     <div className="mt-4 p-4 bg-gray-50 rounded-md shadow-sm">
       <p className="text-sm text-gray-500 mb-2">
-        Estadístico calculado:{" "}
+        Estadígrafo calculado:
         <span className="font-semibold">{estadistico.toFixed(3)}</span>
       </p>
       <p className={`font-medium text-lg ${color}`}>{resultado}</p>
     </div>
   );
 }
-
-/* =======================
-   Funciones auxiliares
-   ======================= */
 
 function calcularEstadistico(
   media1: number,

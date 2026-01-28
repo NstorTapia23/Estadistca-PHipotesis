@@ -45,8 +45,11 @@ export default function SideBar() {
             Varianza
           </Link>
 
-          <Link to="/Parametro" className="px-4 py-2 rounded hover:bg-gray-700">
-            Parametro
+          <Link
+            to="/Proporcion"
+            className="px-4 py-2 rounded hover:bg-gray-700"
+          >
+            Proporción
           </Link>
         </nav>
       </div>
