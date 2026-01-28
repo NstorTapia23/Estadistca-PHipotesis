@@ -4,7 +4,7 @@ type Props = {
   tamMuestra: number;
   DesviacionTipica: number;
   significacion: number;
-  varianzaConocida: boolean;
+  varianzaConocida: "true" | "false";
   mediaMuestral: number;
   mediaPoblacional: number;
 };

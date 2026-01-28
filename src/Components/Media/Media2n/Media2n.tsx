@@ -26,6 +26,7 @@ export function Media2n() {
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     setDatosCalculo({ ...data });
+    console.log(data);
     setMostrar(true);
   };
 

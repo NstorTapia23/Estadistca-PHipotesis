@@ -7,7 +7,7 @@ type Props = {
   significacion: number;
   tipoPrueba: number;
   DesviacionTipica: number;
-  varianzaConocida: boolean;
+  varianzaConocida: "true" | "false";
   mediaMuestral: number;
   mediaPoblacional: number;
   mostrar: boolean;
@@ -88,7 +88,7 @@ export function CalcMedia1n({
       {mostrarComparacion && valorTabla !== undefined && (
         <div className="pt-4 border-t border-gray-200">
           <Comparacion1n
-            valorTabla={valorTabla} //rectificar el watch
+            valorTabla={valorTabla}
             tipoPrueba={tipoPrueba}
             tamMuestra={tamMuestra}
             DesviacionTipica={DesviacionTipica}

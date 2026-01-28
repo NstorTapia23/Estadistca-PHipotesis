@@ -8,7 +8,7 @@ type DatosCalculo = {
   significacion: number;
   tipoPrueba: number;
   DesviacionTipica: number;
-  varianzaConocida: boolean;
+  varianzaConocida: "true" | "false";
   mediaMuestral: number;
   mediaPoblacional: number;
 };
@@ -20,7 +20,7 @@ export function Media1n() {
   const { register, handleSubmit, watch } = useForm<DatosCalculo>({
     defaultValues: {
       tipoPrueba: 1,
-      varianzaConocida: true,
+      varianzaConocida: "true",
     },
   });
 
@@ -130,7 +130,7 @@ export function Media1n() {
             </select>
 
             <label className="mb-2 font-medium mt-2">
-              {varianzaConocida === true
+              {varianzaConocida
                 ? "Desviación típica poblacional"
                 : "Desviación típica muestral"}
             </label>
