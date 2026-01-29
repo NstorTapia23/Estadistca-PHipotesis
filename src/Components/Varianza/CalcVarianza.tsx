@@ -17,19 +17,39 @@ export function CalcVarianza({
 
   const [mostrarComparacion, setMostrarComparacion] = useState(false);
   const [results, setResults] = useState<useValues2 | null>(null);
+
   const onSubmit = (data: useValues2) => {
     setResults(data);
-    console.log(significacion);
     setMostrarComparacion(true);
   };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <section
+      className="
+        bg-white
+        rounded-xl
+        shadow-md
+        border border-gray-200
+        p-6
+        max-w-md
+        mx-auto
+        mt-6
+      "
+    >
+      <h2 className="text-lg font-semibold text-gray-800 mb-4">
+        Comparación de varianza
+      </h2>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700 mb-1">
-            Busque el valor en la tabla para
-            {valorTablaVarConocida(significacion, caso, tamMuestra)}
+            Busque el valor en la tabla para (
+            <span className="font-mono">
+              {valorTablaVarConocida(significacion, caso, tamMuestra)}
+            </span>
+            )
           </label>
+
           <input
             type="number"
             step="any"
@@ -38,36 +58,51 @@ export function CalcVarianza({
               required: true,
               valueAsNumber: true,
             })}
-            className="rounded-md border border-gray-300 px-3 py-2
-                       focus:outline-none focus:ring-2 focus:ring-blue-500
-                       focus:border-blue-500 text-gray-800"
+            className="
+              rounded-md
+              border border-gray-300
+              px-3 py-2
+              text-gray-800
+              focus:outline-none
+              focus:ring-2
+              focus:ring-indigo-500
+              focus:border-indigo-500
+            "
           />
         </div>
 
         <button
           type="submit"
           disabled={mostrarComparacion}
-          className={`py-2 rounded-md font-medium transition
+          className={`
+            py-2
+            rounded-md
+            font-medium
+            transition
             ${
               mostrarComparacion
                 ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                : "bg-blue-600 text-white hover:bg-blue-700"
-            }`}
+                : "bg-indigo-600 text-white hover:bg-indigo-700"
+            }
+          `}
         >
           {mostrarComparacion ? "Resultado mostrado" : "Comparar"}
         </button>
       </form>
+
       {mostrarComparacion && results && (
-        <ComparacionVarianza
-          caso={caso}
-          valorTabla={results.valorTabla}
-          tamMuestra={tamMuestra}
-          varianzaMuestral={varianzaMuestral}
-          varianzaPoblacional={varianzaPoblacional}
-          significacion={significacion}
-        />
+        <div className="mt-6 pt-4 border-t border-gray-200">
+          <ComparacionVarianza
+            caso={caso}
+            valorTabla={results.valorTabla}
+            tamMuestra={tamMuestra}
+            varianzaMuestral={varianzaMuestral}
+            varianzaPoblacional={varianzaPoblacional}
+            significacion={significacion}
+          />
+        </div>
       )}
-    </div>
+    </section>
   );
 }
 

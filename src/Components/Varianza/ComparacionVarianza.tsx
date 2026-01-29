@@ -65,9 +65,9 @@ function RegionCritica({
         Estadigrafo(tamMuestra, varianzaMuestral, varianzaPoblacional) <
         -valorTabla
       ) {
-        return `Se Rechaza`;
+        return `Con un nivel de significación de ${significacion} Se Rechaza la hipotesis nula`;
       } else {
-        return `Se Acepta`;
+        return `Con un nivel de significación de ${significacion} Se Acepta la hipotesis nula`;
       }
   }
 }
